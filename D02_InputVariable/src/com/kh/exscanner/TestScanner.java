@@ -21,6 +21,7 @@ public class TestScanner {
 		
 		int result = input1 + input2 + input3;
 		System.out.println("세 값의 합은 : "+ result);
+		System.out.println("Asdfasdfasdfasdf");
 		//sc.close(); 원래는 sc라는 값을 다 쓴 후에는 잡아야되는데
 		//언제 닫지 모르기 때문에 가만히 둔다.
 	}
