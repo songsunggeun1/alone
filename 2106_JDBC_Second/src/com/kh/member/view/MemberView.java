@@ -49,7 +49,7 @@ public class MemberView {
 	}
 	
 	public void displayError(String message) {
-		System.out.println("서비스 요청처리 실패 :" + message);
+		System.out.println("서비스 요청처리 실패 : " + message);
 	}
 
 	public String inputMemberId() {
