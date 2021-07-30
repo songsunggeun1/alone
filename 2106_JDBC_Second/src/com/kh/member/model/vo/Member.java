@@ -21,6 +21,8 @@ public class Member {
 	// 3. toString()
 	// 매개변수있는 생성자 생성시 기본 생성자를 안만들어주면
 	// 객체생성이 불가능하다
+	
+	
 	public Member(String memberPwd, String memberPhone, String memberEmail, String memberAddress,
 			String memberHobby) {
 		super();
