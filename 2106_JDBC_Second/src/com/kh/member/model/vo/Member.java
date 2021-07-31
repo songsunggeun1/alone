@@ -4,7 +4,8 @@ import java.sql.Date;
 
 public class Member {
 	
-	private String memberId;
+	// 값을 입력시키기 위해 Member객체의 멤버변수 생성
+	private String memberId; 
 	private String memberPwd;
 	private String memberName;
 	private String memberGender;
@@ -24,7 +25,7 @@ public class Member {
 	
 	
 	public Member(String memberPwd, String memberPhone, String memberEmail, String memberAddress,
-			String memberHobby) {
+			String memberHobby) { // Update(정보수정)을 위해 따로 매개변수가 다른 생성자 생성
 		super();
 		this.memberPwd = memberPwd;
 		this.memberPhone = memberPhone;
@@ -46,7 +47,7 @@ public class Member {
 		this.memberEmail = memberEmail;
 		this.memberAddress = memberAddress;
 		this.memberHobby = memberHobby;
-		EnrollDate = enrollDate;
+		this.EnrollDate = enrollDate;
 	}
 
 	public String getMemberId() {

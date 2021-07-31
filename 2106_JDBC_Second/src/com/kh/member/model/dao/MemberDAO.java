@@ -16,37 +16,31 @@ public class MemberDAO {
 	private final String url = "jdbc:oracle:thin:@localhost:1521:XE";
 	private final String user = "STUDENT";
 	private final String password = "STUDENT";
-	
+	// url, user, password는 connection를 DB와 연동시킬때 계속 쓰기 때문에 멤버변수로 저장
 	
 	public MemberDAO() {}
-
-	public List<Member> printMemberList() {
-		
-		Connection conn= null;
-		Statement stmt = null;
-		ResultSet rset = null;
-		ArrayList<Member> mList = null;
-		String sql = "SELECT * FROM MEMBER";
+	
+	public int insertMember(Member member) {
+		Connection conn = null; // DB와 연결하는 connection 객체 생성
+		PreparedStatement pstmt = null; // sql명령어를 실행시키기 위한 객체 반복실행 부분에서는 미리 컴파일을 해주기 때문에 속도측에서 좋음
+		int result = 0; // 전송결과의 성공(횟수) 및 실패를 확인하기 위한 result 변수 생성
+		String sql = "INSERT INTO MEMBER VALUES(?,?,?,?,?,?,?,?,?,DEFAULT)";
+		// 미리 컴파일된 정보를 preparedStatement를 활용해 DB로 전달할 출력문
+		// 
 		try {
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-			conn = DriverManager.getConnection(url, user, password);
-			stmt = conn.createStatement();
-			rset = stmt.executeQuery(sql);
-			mList = new ArrayList<Member>();
-			while(rset.next()) {
-				Member member = new Member();
-				member.setMemberId(rset.getString("MEMBER_ID"));
-				member.setMemberPwd(rset.getString("MEMBER_PWD"));
-				member.setMemberName(rset.getString("MEMBER_NAME"));
-				member.setMemberGender(rset.getString("MEMBER_GENDER"));
-				member.setMemberAge(rset.getInt("MEMBER_AGE"));
-				member.setMemberEmail(rset.getString("MEMBER_EMAIL"));
-				member.setMemberPhone(rset.getString("MEMBER_PHONE"));
-				member.setMemberAddress(rset.getString("MEMBER_ADDRESS"));
-				member.setMemberHobby(rset.getString("MEMBER_HOBBY"));
-				member.setEnrollDate(rset.getDate("ENROLL_DATE"));
-				mList.add(member);
-			}
+			Class.forName("oracle.jdbc.driver.OracleDriver"); // DB 드라이버와 연동
+			conn = DriverManager.getConnection(url, user, password); // connection을 활용해 DB의 사용자와 접촉
+			pstmt = conn.prepareStatement(sql); // sql문을 미리 컴파일 해줌으로서 정보가 다중일 때 유용
+			pstmt.setString(1, member.getMemberId()); // (index, 전달할명령) ? -> 위치홀더 인덱스의 getter를 이용해 값을 지정
+			pstmt.setString(2, member.getMemberPwd());
+			pstmt.setString(3, member.getMemberName());
+			pstmt.setString(4, member.getMemberGender());
+			pstmt.setInt(5, member.getMemberAge());
+			pstmt.setString(6, member.getMemberEmail());
+			pstmt.setString(7, member.getMemberPhone());
+			pstmt.setString(8, member.getMemberAddress());
+			pstmt.setString(9, member.getMemberHobby());
+			result = pstmt.executeUpdate(); // sql명령어를 실행시키는 명령어
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
@@ -54,15 +48,15 @@ public class MemberDAO {
 		}finally {
 			try {
 				conn.close();
-				stmt.close();
-				rset.close();
+				pstmt.close(); // 자원해제
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
-		return mList;
+		
+		return result;
 	}
-
+	
 	public Member printOneById(String memberId) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -83,8 +77,8 @@ public class MemberDAO {
 			// statement와 다르게 executeQuery()메소드에
 			// 전달값없이 바로 호출하여 실행하여 결과값을 rset에 넘겨줌
 			if(rset.next()) {
-				member = new Member();
-				member.setMemberId(rset.getString("MEMBER_ID"));
+				member = new Member(); // 정보를 담을 member객체 생성
+				member.setMemberId(rset.getString("MEMBER_ID")); // resultSet의 getString을 이용해 "MEMBER_ID"(컬럼명??)의 정보입력 
 				member.setMemberPwd(rset.getString("MEMBER_PWD"));
 				member.setMemberName(rset.getString("MEMBER_NAME"));
 				member.setMemberGender(rset.getString("MEMBER_GENDER"));
@@ -111,6 +105,53 @@ public class MemberDAO {
 		}
 		return member;
 	}
+	
+
+
+	public List<Member> printMemberList() {
+		
+		Connection conn= null;
+		Statement stmt = null;
+		ResultSet rset = null;
+		ArrayList<Member> mList = null;
+		String sql = "SELECT * FROM MEMBER";
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn = DriverManager.getConnection(url, user, password);
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(sql);
+			mList = new ArrayList<Member>(); // 전체 출력이기때문에 단일이 아닌 2개 이상의 정보이기 때문에 list를 생성해 값을 저장
+			while(rset.next()) { // if가 아닌 while문을 써주고 member객체 생성해서 값을 넣어준뒤 add 명령어로 list의 정보 추가
+				Member member = new Member();
+				member.setMemberId(rset.getString("MEMBER_ID"));
+				member.setMemberPwd(rset.getString("MEMBER_PWD"));
+				member.setMemberName(rset.getString("MEMBER_NAME"));
+				member.setMemberGender(rset.getString("MEMBER_GENDER"));
+				member.setMemberAge(rset.getInt("MEMBER_AGE"));
+				member.setMemberEmail(rset.getString("MEMBER_EMAIL"));
+				member.setMemberPhone(rset.getString("MEMBER_PHONE"));
+				member.setMemberAddress(rset.getString("MEMBER_ADDRESS"));
+				member.setMemberHobby(rset.getString("MEMBER_HOBBY"));
+				member.setEnrollDate(rset.getDate("ENROLL_DATE"));
+				mList.add(member);
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				conn.close();
+				stmt.close();
+				rset.close(); // 자원 해제 
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return mList;
+	}
+
+
 
 	public ArrayList<Member> printMembersByName(String memberName) {
 		Connection conn = null;
@@ -125,11 +166,11 @@ public class MemberDAO {
 			conn = DriverManager.getConnection(url, user, password);
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, "%" + memberName + "%");
-			rset = pstmt.executeQuery();
+			rset = pstmt.executeQuery(); // 
 			nameList = new ArrayList<Member>();
 			while(rset.next()) {
 				member = new Member();
-				member.setMemberId(rset.getString("MEMBER_ID"));
+				member.setMemberId(rset.getString("MEMBER_ID")); // (index, 전달할명령)
 				member.setMemberPwd(rset.getString("MEMBER_PWD"));
 				member.setMemberName(rset.getString("MEMBER_NAME"));
 				member.setMemberGender(rset.getString("MEMBER_GENDER"));
@@ -157,40 +198,7 @@ public class MemberDAO {
 		return nameList;
 	}
 
-	public int insertMember(Member member) {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		int result = 0;
-		String sql = "INSERT INTO MEMBER VALUES(?,?,?,?,?,?,?,?,?,DEFAULT)";
-		try {
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-			conn = DriverManager.getConnection(url, user, password);
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, member.getMemberId());
-			pstmt.setString(2, member.getMemberPwd());
-			pstmt.setString(3, member.getMemberName());
-			pstmt.setString(4, member.getMemberGender());
-			pstmt.setInt(5, member.getMemberAge());
-			pstmt.setString(6, member.getMemberEmail());
-			pstmt.setString(7, member.getMemberPhone());
-			pstmt.setString(8, member.getMemberAddress());
-			pstmt.setString(9, member.getMemberHobby());
-			result = pstmt.executeUpdate();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
-			try {
-				conn.close();
-				pstmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		return result;
-	}
+
 
 	public int deleteMember(String deleteId) {
 		Connection conn = null;
