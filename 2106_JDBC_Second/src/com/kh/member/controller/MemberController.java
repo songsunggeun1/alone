@@ -82,7 +82,7 @@ public class MemberController {
 		Member searchOne = mDao.printOneById(searchId); // 조회 하고 싶은 아이디를 입력하여 DB에서 데이터를 가져와서
 		if(searchOne != null) {
 			Member member = mView.modifyMember(searchId); // 조회받은 아이디의 수정한 정보를 member객체로 생성해서
-			result = mDao.updateMember(member); // 수정된 정보를 DB에 다시 넘어준다
+			result = mDao.updateMember(member); // 수정된 정보를 DB에 다시 넘겨준다
 			if(result > 0) { // 수정된 정보 DB에 반영이 됐는지 성공, 실패 확인
 				mView.displaySuccess("회원 정보 수정 성공");
 			}else {
