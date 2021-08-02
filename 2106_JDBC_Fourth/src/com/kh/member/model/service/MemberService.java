@@ -19,12 +19,12 @@ public class MemberService {
 		// JDBCTemplate 객체는 template에서 한번만 생성하고 prepareConnection메소드로 사용 
 		// getConnection(null이면 new JDBCTemaplte생성)  
 		// JDBCTeamplate타입의 멤버변수로 저장해준 prepareConnection에다가 getConnection메소드 주소를 저장
+	
 	}
 	
 	// prepareConnection.createConnection() 의 정의
 	// 객체가 null이면 JDBCTemplate를 생성하여 createConnection을 실행하고
 	// 객체가 이미 생성이 되어있는 상황이면 객체를 생성하지 않고 유지하며 사용(새로운 메모리 할당 방지)
-	// DAO에서 자원해제를 안하면 계속 연결이 되어있는 상태기 때문에 자원해제를 안해주는건가..?
 
 	public List<Member> printAll() {
 		MemberDAO mDao = new MemberDAO();
