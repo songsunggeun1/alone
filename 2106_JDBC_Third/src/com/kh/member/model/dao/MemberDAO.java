@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.kh.common.JDBCTemplate;
 import com.kh.member.model.vo.Member;
 
 public class MemberDAO {
@@ -39,7 +40,9 @@ public class MemberDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-
+		}finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(stmt);
 		}
 
 		return list;
@@ -70,6 +73,9 @@ public class MemberDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
 		}
 		return member;
 	}
@@ -102,6 +108,9 @@ public class MemberDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
 		}
 
 		return nameList;
@@ -127,6 +136,8 @@ public class MemberDAO {
 			result = pstmt.executeUpdate(); // 실행문 항상 인지
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
 		}
 
 		return result;
@@ -149,6 +160,8 @@ public class MemberDAO {
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
 		}
 		return result;
 	}
@@ -165,6 +178,8 @@ public class MemberDAO {
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
 		}
 
 		return result;

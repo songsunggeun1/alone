@@ -36,6 +36,8 @@ public class MemberService {
 			mList = mDao.selectAllList(conn);
 		}catch(SQLException e) {
 			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(conn);
 		}
 		return mList;
 	}
@@ -50,6 +52,8 @@ public class MemberService {
 			mOne = mDao.selectOneById(memberId, conn);
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(conn);
 		}
 		
 		return mOne;
@@ -66,6 +70,8 @@ public class MemberService {
 			mList = mDao.selectListByName(memberName, conn);
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(conn);
 		}
 		
 		
@@ -89,6 +95,8 @@ public class MemberService {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(conn);
 		}
 		
 		return result;
@@ -110,6 +118,8 @@ public class MemberService {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(conn);
 		}
 		
 		return result;
@@ -131,6 +141,8 @@ public class MemberService {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(conn);
 		}
 		
 		return result;

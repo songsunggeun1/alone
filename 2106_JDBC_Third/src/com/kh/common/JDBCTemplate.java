@@ -2,7 +2,9 @@ package com.kh.common;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class JDBCTemplate {
 	
@@ -41,5 +43,40 @@ public class JDBCTemplate {
 		
 		return connection;
 	}
+	
+	public static void close(Connection conn) { // 자원해제
+		try {
+			if(conn != null && !conn.isClosed()) {
+				conn.close();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void close(Statement stmt) { // 자원해제
+		
+		try {
+			if(stmt != null && !stmt.isClosed()) {
+				stmt.close();
+	// preparedStatement는 Statement의 상속클래스이기 때문에 statement를 이용해 자원해제를 할 수 있다
+	// 다형성을 이용해 stmt를 닫은 close메소드로도 pstmt를 닫을 수 있다
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	} 
+		
+	
+	public static void close(ResultSet rset) { // 자원해제
+		try {
+			if(rset != null && !rset.isClosed()) {
+				rset.close();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 }
 	
