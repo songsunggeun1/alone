@@ -87,11 +87,11 @@ public class MemberService {
 			conn = prepareConnection.createConnection();
 			result = mDao.inputMember(member, conn);
 			if(result > 0) {
-				conn.commit();
+				JDBCTemplate.commit(conn);
 				// JDBCTemplate에서 connection.setAutoCommit(false) -> 자동커밋 false
 				// 해주었기 때문에 service클래스에서 commit과 rollback을 해준다
 			}else {
-				conn.rollback();
+				JDBCTemplate.rollback(conn);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -112,9 +112,9 @@ public class MemberService {
 			conn = prepareConnection.createConnection();
 			result = mDao.updateMember(member, conn);
 			if(result > 0) {
-				conn.commit();
+				JDBCTemplate.commit(conn);
 			}else {
-				conn.rollback();
+				JDBCTemplate.rollback(conn);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -135,9 +135,9 @@ public class MemberService {
 			conn = prepareConnection.createConnection();
 			result = mDao.deleteMember(deleteId, conn);
 			if(result > 0) {
-				conn.commit();
+				JDBCTemplate.commit(conn);
 			}else {
-				conn.rollback();
+				JDBCTemplate.rollback(conn);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
