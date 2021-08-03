@@ -62,7 +62,6 @@ public class MemberController {
 		}else {
 			mView.displayError("회원 가입 실패");
 		}
-		
 	}
 
 	public void modifyMember(String searchId) {
@@ -81,7 +80,6 @@ public class MemberController {
 		}else {
 			mView.displayError("회원 정보 조회 실패");
 		}
-		
 	}
 
 	public void removeMember(String deleteId) {
