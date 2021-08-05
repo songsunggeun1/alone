@@ -104,7 +104,7 @@ public class LibraryView implements LibraryViewI{
 				break;
 			case 6:
 				String deleteId = inputCId();
-				CustomerCtrl.deleteCustomer(deleteId);;
+				CustomerCtrl.deleteCustomer(deleteId);
 				break;
 			case 7:
 				break 종료;
@@ -290,15 +290,17 @@ public class LibraryView implements LibraryViewI{
 
 	@Override
 	public String inputCId() {
+		Scanner sc = new Scanner(System.in);
 		System.out.print("아이디를 입력해주세요 : ");
-		return new Scanner(System.in).next();
+		String input = sc.next();
+		return input;
 	}
 
 	@Override
 	public Customer inputCustomer() { // 회원가입
 		Scanner sc = new Scanner(System.in);
-		System.out.print("번호를 입력해주세요 : ");
-		int userNo = sc.nextInt();
+//		System.out.print("번호를 입력해주세요 : ");
+//		int userNo = sc.nextInt();
 		System.out.print("아이디를 입력해주세요 : ");
 		String userId = sc.next();
 		System.out.print("이름을 입력해주세요 : ");
@@ -310,7 +312,7 @@ public class LibraryView implements LibraryViewI{
 		String addr = sc.nextLine();
 		System.out.print("성별을 입력해주세요 : ");
 		String gender = sc.next();
-		Customer customer = new Customer(userNo, userId, userName, userAge, addr, gender);
+		Customer customer = new Customer(userId, userName, userAge, addr, gender);
 		
 		return customer;
 	}

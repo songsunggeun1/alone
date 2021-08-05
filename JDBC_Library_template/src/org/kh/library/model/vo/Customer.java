@@ -27,9 +27,24 @@ public class Customer {
 		this.addr = addr;
 		this.gender = gender;
 	}
+	
+	
 
 
 	
+
+
+	public Customer(String userId, String userName, int userAge, String addr, String gender) {
+		super();
+		this.userId = userId;
+		this.userName = userName;
+		this.userAge = userAge;
+		this.addr = addr;
+		this.gender = gender;
+	}
+
+
+
 
 
 	public Customer(int userNo, String addr, String userId) {

@@ -113,16 +113,16 @@ public class CumstomerStoreLogic implements CustomerStore{
 		
 		int result = 0;
 		PreparedStatement pstmt = null;
-		String sql = "INSERT INTO CUSTOMER VALUES(?,?,?,?,?,?,DEFAULT)";
+		String sql = "INSERT INTO CUSTOMER VALUES((SELECT MAX(USER_NO)+1 FROM CUSTOMER),?,?,?,?,?,DEFAULT)";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, customer.getUserNo());
-			pstmt.setString(2, customer.getUserId());
-			pstmt.setString(3, customer.getUserName());
-			pstmt.setInt(4, customer.getUserAge());
-			pstmt.setString(5, customer.getAddr());
-			pstmt.setString(6, customer.getGender());
+//			pstmt.setInt(1, customer.getUserNo());
+			pstmt.setString(1, customer.getUserId());
+			pstmt.setString(2, customer.getUserName());
+			pstmt.setInt(3, customer.getUserAge());
+			pstmt.setString(4, customer.getAddr());
+			pstmt.setString(5, customer.getGender());
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
